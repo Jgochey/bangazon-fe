@@ -1,9 +1,36 @@
 import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
-import { useAuth } from '../utils/context/authContext';
+import { useEffect, useState } from 'react';
+import firebase from 'firebase';
+import { signOut } from '../src/utils/auth';
+import Signin from '../src/components/Signin';
+import NavBar from '../src/components/NavBar';
+import UserProfile from '../src/app/UserProfile/[uid]/page';
+// import { useAuth } from '../src/utils/context/authContext';
 
 function Home() {
-  const { user } = useAuth();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((users) => {
+      setUser(users);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (!user) {
+    return <Signin />;
+  }
+
+  if (user) {
+    return (
+      <>
+        <NavBar />
+        <UserProfile />
+      </>
+    );
+  }
+
   return (
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
