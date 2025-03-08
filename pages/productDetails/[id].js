@@ -2,7 +2,10 @@
 
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Button } from 'react-bootstrap';
 import { getProduct } from '../../src/api/callData';
+import GetUsername from '../../src/components/GetUsername';
 
 export default function ProductDetailsPage({ id }) {
   const [productData, setProductData] = useState(null);
@@ -13,6 +16,10 @@ export default function ProductDetailsPage({ id }) {
 
   if (!productData) {
     return <div>Loading...</div>;
+  }
+
+  function addToCart() {
+    console.warn('Added to cart');
   }
 
   return (
@@ -26,7 +33,11 @@ export default function ProductDetailsPage({ id }) {
           </div>
           <div className="col">
             <strong>Sold by: </strong>
-            {productData.sellerId}
+            <Link href={`/userProfile/${productData.sellerId}`} passHref>
+              <a href={`/userProfile/${productData.sellerId}`} style={{ color: 'blue' }}>
+                <GetUsername sellerId={productData.sellerId} />
+              </a>
+            </Link>
           </div>
           <div className="col">
             <strong> {productData.description} </strong>
@@ -44,6 +55,9 @@ export default function ProductDetailsPage({ id }) {
           </div>
         </div>
       </div>
+      <Button variant="primary" type="button" size="lg" className="copy-btn" onClick={() => addToCart()}>
+        Add to Cart
+      </Button>
     </div>
   );
 }

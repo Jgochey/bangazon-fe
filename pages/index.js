@@ -1,15 +1,17 @@
 import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import firebase from 'firebase';
+import { useRouter } from 'next/router';
 import { signOut } from '../src/utils/auth';
 import Signin from '../src/components/Signin';
-import LatestProducts from '../src/app/UserProfile/[uid]/page';
+import LatestProducts from '../src/components/LatestProducts';
 import { getRecentProducts } from '../src/api/callData';
 // import { useAuth } from '../src/utils/context/authContext';
 
 function Home() {
   const [user, setUser] = useState(null);
   const [productData, setProductData] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     getRecentProducts().then(setProductData);
@@ -24,6 +26,10 @@ function Home() {
 
     return () => unsubscribe();
   }, []);
+
+  function sellItemBtn() {
+    router.push('/selling');
+  }
 
   if (!user) {
     return <Signin />;
@@ -48,7 +54,7 @@ function Home() {
           Sign Out
         </Button>
       </div>
-      <Button variant="primary" type="button" size="lg" className="copy-btn" onClick={() => console.warn('List an item!')}>
+      <Button variant="primary" type="button" size="lg" className="copy-btn" onClick={() => sellItemBtn()}>
         List an Item for Sale
       </Button>
       <LatestProducts productData={productData} />
