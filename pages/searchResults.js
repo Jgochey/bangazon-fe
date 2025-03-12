@@ -1,7 +1,7 @@
-import React from 'react';
+// import React from 'react';
 
-export default function SearchResultsPage() {
-  return (
-    <div>Search Results page</div>
-  );
-}
+// export default function SearchResultsPage() {
+//   return (
+//     <div>Search Results page</div>
+//   );
+// }

@@ -2,28 +2,58 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { registerUser } from '../utils/auth';
+// import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { registerUser } from '../api/callData';
 
-// Update with path to registerUser
+function RegisterForm({ user, newUid }) {
+  // const [userCount, setUserCount] = useState(0);
 
-function RegisterForm({ user, updateUser }) {
+  // useEffect(() => {
+  //   getUsers().then((users) => {
+  //     setUserCount(users.length);
+  //   });
+  // }, []);
+
   const [formData, setFormData] = useState({
-    bio: '',
-    uid: user.uid,
+    Name: '',
+    Email: '',
+    Password: 'dontworryaboutit',
+    uid: newUid,
+    isRegistered: false,
+    // id: userCount + 1,
   });
+
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser(formData).then(() => updateUser(user.uid));
+    const updatedFormData = {
+      ...formData, isRegistered: true, Uid: user.uid, Password: 'dontworryaboutit',
+    };
+    console.warn('Form data:', updatedFormData);
+    registerUser(updatedFormData)
+      .then(() => router.push('/'))
+      .catch((error) => console.error('Error:', error));
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Gamer Bio</Form.Label>
-        <Form.Control as="textarea" name="bio" required placeholder="Enter your Bio" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
-        <Form.Text className="text-muted">Let other gamers know a little bit about you...</Form.Text>
+      <Form.Group className="mb-3" controlId="formBasicName">
+        <Form.Label>Sign Up</Form.Label>
+
+        <Form.Control as="textarea" name="Name" required placeholder="Username" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+
       </Form.Group>
+
+      {/* <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Control as="textarea" name="Password" required placeholder="Password" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+      </Form.Group> */}
+
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Control as="textarea" name="Email" required placeholder="E-Mail" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))} />
+      </Form.Group>
+
       <Button variant="primary" type="submit">
         Submit
       </Button>
@@ -33,9 +63,14 @@ function RegisterForm({ user, updateUser }) {
 
 RegisterForm.propTypes = {
   user: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
+    Name: PropTypes.string,
+    Email: PropTypes.string,
+    Password: PropTypes.string,
+    uid: PropTypes.string,
+    // id: PropTypes.number,
+    isRegistered: PropTypes.bool,
   }).isRequired,
-  updateUser: PropTypes.func.isRequired,
+  newUid: PropTypes.string.isRequired,
 };
 
 export default RegisterForm;
