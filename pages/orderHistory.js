@@ -1,7 +1,7 @@
-import React from 'react';
+// import React from 'react';
 
-export default function OrderHistoryPage() {
-  return (
-    <div>Order History Page</div>
-  );
-}
+// export default function OrderHistoryPage() {
+//   return (
+//     <div>Order History Page</div>
+//   );
+// }
