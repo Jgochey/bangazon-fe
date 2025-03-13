@@ -26,15 +26,10 @@ function SellingForm({ obj, newUser }) {
   useEffect(() => {
     getCategories().then((categories) => {
       setCategoryList(categories);
-      console.warn('Categories fetched:', categories);
     }).catch((error) => {
       console.error('Error fetching categories:', error);
     });
   }, []);
-
-  useEffect(() => {
-    console.warn('Category List:', categoryList);
-  }, [categoryList]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,14 +40,12 @@ function SellingForm({ obj, newUser }) {
   };
 
   const handleCategorySelect = (category) => {
-    // Set the category id in the form input to the selected category id
+    // Set the category id in the form input to the selected category id.
     setFormInput((prevState) => ({
       ...prevState,
       CategoryId: category.id,
     }));
   };
-
-  // ALMOST DONE WITH THIS FILE I THINK, JUST NEEED TO IMPLEMENT USER FIRST :(
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,13 +57,6 @@ function SellingForm({ obj, newUser }) {
       postProduct(payload).then(() => router.push('/'));
     }
   };
-
-  // const setCategoryId = (e) => {
-  //   setFormInput((prevState) => ({
-  //     ...prevState,
-  //     CategoryId: e,
-  //   }));
-  // };
 
   return (
     <Form onSubmit={handleSubmit} className="text-black">
@@ -97,16 +83,6 @@ function SellingForm({ obj, newUser }) {
       </FloatingLabel>
 
       {/* CATEGORY INPUT  */}
-      {/* <Dropdown.Menu className="custom-dropdown-menu">
-        {
-              categoryList.map((category) => (
-                <Dropdown.Item className="custom-dropdown-item" key={category.Id} onClick={() => handleCategorySelect(category)}>
-                  {category.Name}
-                </Dropdown.Item>
-              ))
-            }
-      </Dropdown.Menu> */}
-
       <Dropdown>
         <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ color: 'white', width: '80%' }}>
           {formInput.CategoryId ? categoryList.find((cat) => cat.id === formInput.CategoryId)?.name : 'Select Category'}

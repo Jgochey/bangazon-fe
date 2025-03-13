@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../src/utils/context/authContext';
 import SellingForm from '../src/components/SellingForm';
@@ -7,7 +6,6 @@ import SellingForm from '../src/components/SellingForm';
 export default function SellingPage() {
   const user = useAuth();
   const { user: { id } } = user;
-  // const router = useRouter();
 
   if (!user) {
     return (

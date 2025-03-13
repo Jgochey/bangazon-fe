@@ -125,6 +125,18 @@ const updateProduct = (product) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const deleteProduct = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/products/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch((error) => reject(error));
+});
+
 // checkUser and registerUser are used for authentication with firebase, check that it works properly with the register form.
 const checkUser = (uid) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/checkuser?uid=${uid}`, {
@@ -145,23 +157,7 @@ const checkUser = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// const registerUser = (userInfo) => new Promise((resolve, reject) => {
-//   fetch(`${clientCredentials.databaseURL}/users`, {
-//     method: 'POST',
-//     body: JSON.stringify(userInfo),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json',
-//     },
-//   })
-//   // .then((resp) => resolve(resp.json()))
-//     .then((response) => response.json())
-//     .then((data) => resolve(data))
-//     .catch(reject);
-// });
-
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
-  console.warn('Registering user with info:', userInfo);
   fetch(`${clientCredentials.databaseURL}/users`, {
     method: 'POST',
     body: JSON.stringify(userInfo),
@@ -179,75 +175,13 @@ const registerUser = (userInfo) => new Promise((resolve, reject) => {
       return response.json();
     })
     .then((data) => {
-      console.warn('User registered successfully:', data);
       resolve(data);
     })
     .catch((error) => {
-      console.error('Error registering user:', error);
       reject(error);
     });
 });
 
-// const updateUser = (userInfo, id) => new Promise((resolve, reject) => {
-//   fetch(`${clientCredentials.databaseURL}/users/${id}`, {
-//     method: 'PUT',
-//     body: JSON.stringify(userInfo),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json',
-//     },
-//   })
-//   // .then((resp) => resolve(resp.json()))
-//     .then((response) => response.json())
-//     .then((data) => resolve(data))
-//     .catch(reject);
-// });
-
-// const registerUser = (userInfo) => new Promise((resolve, reject) => {
-//   console.log('Registering user with info:', userInfo);
-//   fetch(`${clientCredentials.databaseURL}/users`, {
-//     method: 'POST',
-//     body: JSON.stringify(userInfo),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json',
-//     },
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log('User registered successfully:', data);
-//       resolve(data);
-//     })
-//     .catch((error) => {
-//       console.error('Error registering user:', error);
-//       reject(error);
-//     });
-// });
-
-// const updateUser = (id) => new Promise((resolve, reject) => {
-//   fetch(`${clientCredentials.databaseURL}/users/${id}`, {
-//     method: 'PUT',
-//     body: JSON.stringify,
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Accept: 'application/json',
-//     },
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.json();
-//     })
-//     .then((data) => resolve(data))
-//     .catch((error) => reject(error));
-// });
-
 export {
-  getProducts, getRecentProducts, getProduct, getUserFromProduct, getUser, getUsers, getProductsByUser, getCategories, postProduct, updateProduct, registerUser, checkUser,
+  getProducts, getRecentProducts, getProduct, getUserFromProduct, getUser, getUsers, getProductsByUser, getCategories, postProduct, updateProduct, deleteProduct, registerUser, checkUser,
 };

@@ -23,24 +23,24 @@ export default function NavBar() {
             <Link href="/" passHref>
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link href="/checkout" passHref>
+            {/* <Link href="/checkout" passHref>
               <Nav.Link>Checkout</Nav.Link>
-            </Link>
-            <Link href="/orderHistory" passHref>
+            </Link> */}
+            {/* <Link href="/orderHistory" passHref>
               <Nav.Link>Order History</Nav.Link>
-            </Link>
-            <Link href="/productDetails" passHref>
+            </Link> */}
+            {/* <Link href="/productDetails" passHref>
               <Nav.Link>Product Details</Nav.Link>
-            </Link>
-            <Link href="/profile" passHref>
+            </Link> */}
+            {/* <Link href="/profile" passHref>
               <Nav.Link>Profile</Nav.Link>
-            </Link>
+            </Link> */}
             <Link href="/registration" passHref>
               <Nav.Link>Registration</Nav.Link>
             </Link>
-            <Link href="/searchResults" passHref>
+            {/* <Link href="/searchResults" passHref>
               <Nav.Link>Search Results</Nav.Link>
-            </Link>
+            </Link> */}
             <Link href="/selling" passHref>
               <Nav.Link>Selling</Nav.Link>
             </Link>
@@ -56,30 +56,3 @@ export default function NavBar() {
     </Navbar>
   );
 }
-
-// export default function NavBar() {
-//   return (
-//     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-//       <Container>
-//         <Link passHref href="/">
-//           <Navbar.Brand>CHANGE ME</Navbar.Brand>
-//         </Link>
-//         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-//         <Navbar.Collapse id="responsive-navbar-nav">
-//           <Nav className="me-auto">
-//             {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-//             <Link passHref href="/">
-//               <Nav.Link>Home</Nav.Link>
-//             </Link>
-//             <Link passHref href="/Checkout">
-//               <Nav.Link>Checkout</Nav.Link>
-//             </Link>
-//             <Button variant="danger" onClick={signOut}>
-//               Sign Out
-//             </Button>
-//           </Nav>
-//         </Navbar.Collapse>
-//       </Container>
-//     </Navbar>
-//   );
-// }
