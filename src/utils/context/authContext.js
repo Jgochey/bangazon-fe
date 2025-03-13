@@ -28,27 +28,6 @@ function AuthProvider(props) {
     [oAuthUser],
   );
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((fbUser) => {
-  //     if (fbUser) {
-  //       setOAuthUser(fbUser);
-  //       checkUser(fbUser.uid).then((userInfo) => {
-  //         let userObj = {};
-  //         if ('null' in userInfo) {
-  //           userObj = userInfo;
-  //         } else {
-  //           userObj = { fbUser, uid: fbUser.uid, ...userInfo };
-  //         }
-  //         setUser(userObj);
-  //       });
-  //       setUser(fbUser);
-  //     } else {
-  //       setOAuthUser(false);
-  //       setUser(false);
-  //     }
-  //   }); // creates a single global listener for auth state changed
-  // }, []);
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
@@ -70,18 +49,6 @@ function AuthProvider(props) {
       }
     });
   }, []);
-
-  // const value = useMemo(
-  //   // https://reactjs.org/docs/hooks-reference.html#usememo
-  //   () => ({
-  //     user,
-  //     updateUser,
-  //     userLoading: user === null || oAuthUser === null,
-  //     // as long as user === null, will be true
-  //     // As soon as the user value !== null, value will be false
-  //   }),
-  //   [user, oAuthUser, updateUser],
-  // );
 
   const value = useMemo(
     // https://reactjs.org/docs/hooks-reference.html#usememo

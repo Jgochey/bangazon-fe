@@ -2,26 +2,16 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-// import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { registerUser } from '../api/callData';
 
 function RegisterForm({ user, newUid }) {
-  // const [userCount, setUserCount] = useState(0);
-
-  // useEffect(() => {
-  //   getUsers().then((users) => {
-  //     setUserCount(users.length);
-  //   });
-  // }, []);
-
   const [formData, setFormData] = useState({
     Name: '',
     Email: '',
     Password: 'dontworryaboutit',
     uid: newUid,
     isRegistered: false,
-    // id: userCount + 1,
   });
 
   const router = useRouter();
@@ -31,7 +21,6 @@ function RegisterForm({ user, newUid }) {
     const updatedFormData = {
       ...formData, isRegistered: true, Uid: user.uid, Password: 'dontworryaboutit',
     };
-    console.warn('Form data:', updatedFormData);
     registerUser(updatedFormData)
       .then(() => router.push('/'))
       .catch((error) => console.error('Error:', error));
@@ -67,7 +56,6 @@ RegisterForm.propTypes = {
     Email: PropTypes.string,
     Password: PropTypes.string,
     uid: PropTypes.string,
-    // id: PropTypes.number,
     isRegistered: PropTypes.bool,
   }).isRequired,
   newUid: PropTypes.string.isRequired,

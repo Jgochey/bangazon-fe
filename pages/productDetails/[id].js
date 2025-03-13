@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 import { getProduct } from '../../src/api/callData';
 import GetUsername from '../../src/components/GetUsername';
 
 export default function ProductDetailsPage({ id }) {
   const [productData, setProductData] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     getProduct(id).then(setProductData);
@@ -19,13 +21,28 @@ export default function ProductDetailsPage({ id }) {
   }
 
   function addToCart() {
-    console.warn('Added to cart');
+  // Retrieve the current cart from localStorage or create a new empty array if it doesn't exist.
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const item = {
+      id: productData.id,
+      title: productData.title,
+      price: productData.pricePerUnit,
+      sellerId: productData.sellerId,
+    };
+
+    // Add the item to the cart array
+    cart.push(item);
+
+    // Save the updated cart back to localStorage.
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    router.push('/shoppingCart');
   }
 
   return (
     <div>
 
-      {/* Update this to be a card for each item */}
       <div className="container">
         <div className="row text-center">
           <div className="col">
@@ -75,15 +92,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-// ProductDetailsPage.defaultProps = {
-//   id: [],
-// };
-
-// import React from 'react';
-
-// export default function ProductDetailsPage() {
-//   return (
-//     <div>Product Details page</div>
-//   );
-// }

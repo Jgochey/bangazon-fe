@@ -6,7 +6,6 @@ import { signOut } from '../src/utils/auth';
 import Signin from '../src/components/Signin';
 import LatestProducts from '../src/components/LatestProducts';
 import { getRecentProducts } from '../src/api/callData';
-// import { useAuth } from '../src/utils/context/authContext';
 
 function Home() {
   const [user, setUser] = useState(null);
@@ -16,8 +15,6 @@ function Home() {
   useEffect(() => {
     getRecentProducts().then(setProductData);
   }, []);
-
-  console.warn(productData);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((users) => {
@@ -41,21 +38,20 @@ function Home() {
       <div
         className="text-center d-flex flex-column justify-content-center align-content-center"
         style={{
-          height: '90vh',
+          height: '40vh',
           padding: '30px',
-          maxWidth: '400px',
+          maxWidth: '300px',
           margin: '0 auto',
         }}
       >
         <h1> Welcome to Bangazon, {user.displayName}!</h1>
-        <p>Your Bio: {user.bio}</p>
-        <p>Click the button below to logout!</p>
         <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
           Sign Out
         </Button>
+        <p>Click on a product to view item information or Click on a seller to see all the products they have available.</p>
       </div>
       <Button variant="primary" type="button" size="lg" className="copy-btn" onClick={() => sellItemBtn()}>
-        List an Item for Sale
+        Sell an Item
       </Button>
       <LatestProducts productData={productData} />
     </>

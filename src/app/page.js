@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-// import { Button } from 'react-bootstrap';
 import SignIn from '../components/Signin';
 import { firebase } from '../utils/client';
 import NavBar from '../components/NavBar';
@@ -15,8 +14,6 @@ function Home() {
     getRecentProducts().then(setProductData);
   }, []);
 
-  console.warn(productData);
-
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((users) => {
       setUser(users);
@@ -28,15 +25,6 @@ function Home() {
   if (!user) {
     return <SignIn />;
   }
-
-  // if (user) {
-  //   return (
-  //     <>
-  //       <NavBar />
-  //       <UserProfile />
-  //     </>
-  //   );
-  // }
 
   return (
     <>
@@ -84,17 +72,3 @@ function Home() {
 }
 
 export default Home;
-
-// public int Id { get; set; }
-
-// public int SellerId { get; set; }
-
-// public int CategoryId { get; set; }
-
-// public string Title { get; set; }
-
-// public string Description { get; set; }
-
-// public decimal PricePerUnit { get; set; }
-
-// public int UnitsAvailable { get; set; }

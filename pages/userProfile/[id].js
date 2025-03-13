@@ -3,20 +3,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { getProductsByUser, getUser } from '../../src/api/callData';
 
-// Show all the user's details, but only to the loggined-in user. Everyone else should see the products the user has for sale.
-
-// if user.id === seller id
-// return {
-//   <div>
-//   profile stuff
-//   </div>
-// }
-
-// else
-// return {
-//   just the products
-// }
-
 export default function ProfilePage({ id }) {
   const [newUser, setNewUser] = useState(id);
   const [userProducts, setUserProducts] = useState([]);
@@ -72,6 +58,7 @@ ProfilePage.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
+// This async function should be called before the component is rendered. This will convert the id from a string to a number.
 export async function getServerSideProps(context) {
   const { id } = context.params;
 

@@ -1,7 +1,7 @@
-import React from 'react';
+// import React from 'react';
 
-export default function CheckoutPage() {
-  return (
-    <div>Checkout page</div>
-  );
-}
+// export default function CheckoutPage() {
+//   return (
+//     <div>Checkout page</div>
+//   );
+// }

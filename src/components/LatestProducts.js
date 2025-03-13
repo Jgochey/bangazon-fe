@@ -10,7 +10,6 @@ export default function LatestProducts({ productData }) {
 
       <h4>Check out our latest products</h4>
 
-      {/* Update this to be a card for each item */}
       <div className="container">
         <div className="row text-center">
           <div className="col">
