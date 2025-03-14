@@ -5,12 +5,24 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { getProduct } from '../../src/api/callData';
+import { getProduct, getUser } from '../../src/api/callData';
 import GetUsername from '../../src/components/GetUsername';
+import { useAuth } from '../../src/utils/context/authContext';
 
 export default function ProductDetailsPage({ id }) {
   const [productData, setProductData] = useState(null);
   const router = useRouter();
+  const [userStatus, setUserStatus] = useState(false);
+  const user = useAuth();
+
+  // Check to see if the user has registered. If not, keep userStatus as false. If so, set userStatus to true.
+  useEffect(() => {
+    getUser(user.user.uid).then((data) => {
+      if (data.isRegistered === true) {
+        setUserStatus(true);
+      }
+    });
+  }, [user.user.uid]);
 
   useEffect(() => {
     getProduct(id).then(setProductData);
@@ -21,23 +33,26 @@ export default function ProductDetailsPage({ id }) {
   }
 
   function addToCart() {
-  // Retrieve the current cart from localStorage or create a new empty array if it doesn't exist.
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (userStatus === false) {
+      router.push('/registration');
+    } else {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    const item = {
-      id: productData.id,
-      title: productData.title,
-      price: productData.pricePerUnit,
-      sellerId: productData.sellerId,
-    };
+      const item = {
+        id: productData.id,
+        title: productData.title,
+        price: productData.pricePerUnit,
+        sellerId: productData.sellerId,
+      };
 
-    // Add the item to the cart array
-    cart.push(item);
+      // Add the item to the cart array
+      cart.push(item);
 
-    // Save the updated cart back to localStorage.
-    localStorage.setItem('cart', JSON.stringify(cart));
+      // Save the updated cart back to localStorage.
+      localStorage.setItem('cart', JSON.stringify(cart));
 
-    router.push('/shoppingCart');
+      router.push('/shoppingCart');
+    }
   }
 
   return (
