@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import GetUsername from '../src/components/GetUsername';
 import { getProduct } from '../src/api/callData';
 
 export default function ShoppingCartPage() {
   const [cart, setCart] = useState([]);
   const [productData, setProductData] = useState({});
+  const router = useRouter();
 
   useEffect(() => {
     // Retrieve the cart data from localStorage and turn it into a JavaScript object.
@@ -32,10 +34,13 @@ export default function ShoppingCartPage() {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
+  const shoppingTotal = cart.reduce((acc, item) => acc + item.price, 0);
+
   return (
     <>
       <div>Current Items in your Cart:</div>
       {cart.map((item) => (
+
         <Card key={item.id}>
           <Card.Body>
             <Link href={`/productDetails/${item.id}`} passHref>
@@ -62,7 +67,11 @@ export default function ShoppingCartPage() {
             </div>
           </Card.Body>
         </Card>
+
       ))}
+
+      <div>Total: ${shoppingTotal} </div>
+      <Button onClick={() => router.push('/checkout')}>Proceed to Checkout</Button>
     </>
   );
 }
