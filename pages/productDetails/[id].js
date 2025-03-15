@@ -5,14 +5,15 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { getProduct, getUser } from '../../src/api/callData';
+import { getCategories, getProduct, getUser } from '../../src/api/callData';
 import GetUsername from '../../src/components/GetUsername';
 import { useAuth } from '../../src/utils/context/authContext';
 
 export default function ProductDetailsPage({ id }) {
   const [productData, setProductData] = useState(null);
-  const router = useRouter();
   const [userStatus, setUserStatus] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
+  const router = useRouter();
   const user = useAuth();
 
   // Check to see if the user has registered. If not, keep userStatus as false. If so, set userStatus to true.
@@ -27,6 +28,14 @@ export default function ProductDetailsPage({ id }) {
   useEffect(() => {
     getProduct(id).then(setProductData);
   }, [id]);
+
+  useEffect(() => {
+    getCategories().then((categories) => {
+      setCategoryList(categories);
+    }).catch((error) => {
+      console.error('Error fetching categories:', error);
+    });
+  }, []);
 
   if (!productData) {
     return <div>Loading...</div>;
@@ -76,7 +85,7 @@ export default function ProductDetailsPage({ id }) {
           </div>
           <div className="col">
             <strong>Category: </strong>
-            {productData.categoryId}
+            {categoryList.find((category) => category.id === productData.categoryId).name}
           </div>
           <div className="col">
             <strong> {productData.pricePerUnit} </strong>
