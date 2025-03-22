@@ -83,9 +83,6 @@ export default function ProductDetailsPage({ id }) {
             <strong> {productData.description} </strong>
           </div>
           <div className="col">
-            {/* <strong>Category: </strong>
-            {categoryList.find((category) => category.id === productData.categoryId).name} */}
-            <div className="col">
               <strong>Category: </strong>
               {categoryList.length > 0 && productData.categoryId
                 ? categoryList.find((category) => category.id === productData.categoryId)?.name || 'Unknown Category' : 'Loading Category...'}
