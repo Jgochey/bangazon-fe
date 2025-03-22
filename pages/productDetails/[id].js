@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { getCategories, getProduct, getUser } from '../../src/api/callData';
+import { getCategories, getProduct } from '../../src/api/callData';
 import GetUsername from '../../src/components/GetUsername';
 import { useAuth } from '../../src/utils/context/authContext';
 
@@ -15,15 +15,14 @@ export default function ProductDetailsPage({ id }) {
   const [categoryList, setCategoryList] = useState([]);
   const router = useRouter();
   const user = useAuth();
+  const { user: { isRegistered } } = user;
 
   // Check to see if the user has registered. If not, keep userStatus as false. If so, set userStatus to true.
   useEffect(() => {
-    getUser(user.user.uid).then((data) => {
-      if (data.isRegistered === true) {
-        setUserStatus(true);
-      }
-    });
-  }, [user.user.uid]);
+    if (isRegistered === true) {
+      setUserStatus(true);
+    }
+  }, [isRegistered]);
 
   useEffect(() => {
     getProduct(id).then(setProductData);

@@ -8,11 +8,11 @@ export default function CheckoutPage() {
 
   const confirmationMessage = () => {
     alert('Your purchase has been confirmed. Thank you for shopping with us!');
-    // Clear the user's cart from localstorage, wait 4 seconds, then redirect to the home page.
+    // Clear the user's cart from localstorage, wait 1 second, then redirect to the home page.
     localStorage.removeItem('cart');
     setTimeout(() => {
       window.location.href = '/';
-    }, 4000);
+    }, 1000);
   };
 
   const handleSelect = (eventKey) => {
