@@ -64,25 +64,25 @@ export default function ProductDetailsPage({ id }) {
   }
 
   return (
-    <div>
-
-      <div className="container">
-        <div className="row text-center">
-          <div className="col">
-            <strong> {productData.title} </strong>
-          </div>
-          <div className="col">
-            <strong>Sold by: </strong>
-            <Link href={`/userProfile/${productData.sellerId}`} passHref>
-              <a href={`/userProfile/${productData.sellerId}`} style={{ color: 'blue' }}>
-                <GetUsername sellerId={productData.sellerId} />
-              </a>
-            </Link>
-          </div>
-          <div className="col">
-            <strong> {productData.description} </strong>
-          </div>
-          <div className="col">
+    <>
+      <div>
+        <div className="container">
+          <div className="row text-center">
+            <div className="col">
+              <strong> {productData.title} </strong>
+            </div>
+            <div className="col">
+              <strong>Sold by: </strong>
+              <Link href={`/userProfile/${productData.sellerId}`} passHref>
+                <a href={`/userProfile/${productData.sellerId}`} style={{ color: 'blue' }}>
+                  <GetUsername sellerId={productData.sellerId} />
+                </a>
+              </Link>
+            </div>
+            <div className="col">
+              <strong> {productData.description} </strong>
+            </div>
+            <div className="col">
               <strong>Category: </strong>
               {categoryList.length > 0 && productData.categoryId
                 ? categoryList.find((category) => category.id === productData.categoryId)?.name || 'Unknown Category' : 'Loading Category...'}
@@ -96,11 +96,8 @@ export default function ProductDetailsPage({ id }) {
             {productData.unitsAvailable}
           </div>
         </div>
-      </div>
-      <Button variant="primary" type="button" size="lg" className="copy-btn" onClick={() => addToCart()}>
-        Add to Cart
-      </Button>
-    </div>
+      </div><Button variant="primary" type="button" size="lg" className="copy-btn" onClick={() => addToCart()}>Add to Cart</Button>
+    </>
   );
 }
 
